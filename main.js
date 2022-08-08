@@ -1,3 +1,5 @@
-import assembleGameBoard from "./game-board.mjs";
+import gameBoardModule from "./modules/game-board.mjs";
 
-assembleGameBoard();
+gameBoardModule.assembleGameBoard();
+
+// gameBoardModule.disassembleGameBoard();
