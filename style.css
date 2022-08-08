@@ -1,0 +1,46 @@
+:root {
+  --main-background-color: ;
+  --secondary-background-color: ;
+  --main-text-color: ;
+  --secondary-text-color: ;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  margin: 0px;
+  min-height: 100vh;
+  font-family: montserrat,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+}
+
+.header {
+  height: 75px;
+  background-color: rgb(225, 225, 225);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  flex: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(175, 175, 175);
+}
+
+h1 {
+  font-size: 50px;
+  margin: 0px;
+  color: rgb(80, 80, 80);
+}
+
+.board {
+  background-color: rgb(245, 245, 245);
+  box-sizing: border-box;
+  height: clamp(350px, 75vh, 600px);
+  width: clamp(350px, 75vh, 600px);
+  margin: 15px;
+  padding: 10px;
+  border-radius: 15px;
+}
