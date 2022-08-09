@@ -1,62 +1,41 @@
 import gameBoardModule from "./modules/game-board.mjs";
 import playerFormModule from "./modules/player-form.mjs";
+import startButtonModule from "./modules/start-buttons.mjs";
 
 const gameplayModule = (function() {
 
   const content = document.querySelector('.content');
-  let startButtonDiv = null;
-  let onePlayerButton = null;
-  let twoPlayerButton = null;
 
   function CreatePlayer(name, xOrO, computerPlayer = null) {
     return {name, xOrO, computerPlayer};
   }
 
-  function removeStartButtons() {
-    onePlayerButton.removeEventListener('click', startOnePlayerGame);
-    twoPlayerButton.removeEventListener('click', startTwoPlayerGame);
-    onePlayerButton.remove();
-    twoPlayerButton.remove();
-    startButtonDiv.remove();
-  }
+  // function startOnePlayerGame() {
+  //   startButtonModule.removeStartButtons(startOnePlayerGame, startTwoPlayerGame);
+  // }
 
-  function startOnePlayerGame() {
-    removeStartButtons();
-  }
-
-  function startTwoPlayerGame() {
-    removeStartButtons();
-    return
-  }
+  // function startTwoPlayerGame() {
+  //   startButtonModule.removeStartButtons(startOnePlayerGame, startTwoPlayerGame);
+  // }
 
   return {
-    mainComponent: content,
 
     displayStartButtons: function() {
-      startButtonDiv = document.createElement('div');
-      onePlayerButton = document.createElement('button');
-      twoPlayerButton = document.createElement('button');
-    
-      startButtonDiv.classList.add('start-button-container');
-      onePlayerButton.textContent = 'One Player';
-      twoPlayerButton.textContent = 'Two Player';
-    
-      startButtonDiv.appendChild(onePlayerButton);
-      startButtonDiv.appendChild(twoPlayerButton);
-      content.appendChild(startButtonDiv);
+      content.appendChild(startButtonModule.createStartButtons());
     },
-    
-    assignStartButtonListeners: function(onePlayer, twoPlayer) {
-      onePlayerButton.addEventListener('click', onePlayer);
-      twoPlayerButton.addEventListener('click', twoPlayer);
+    startOnePlayerGame: function() {
+      startButtonModule.removeStartButtons(gameplayModule.startOnePlayerGame, gameplayModule.startTwoPlayerGame);
+    },
+    startTwoPlayerGame: function() {
+      startButtonModule.removeStartButtons(gameplayModule.startOnePlayerGame, gameplayModule.startTwoPlayerGame);
     }
   };
 })();
 
-gameplayModule.mainComponent.appendChild(playerFormModule.createForm('One'));
+// gameplayModule.mainComponent.appendChild(playerFormModule.createForm('One'));
 
-// gameplayModule.displayStartButtons();
-// gameplayModule.assignStartButtonListeners();
+gameplayModule.displayStartButtons();
+startButtonModule.assignStartButtonListeners(gameplayModule.startOnePlayerGame, gameplayModule.startTwoPlayerGame);
 
 
 
