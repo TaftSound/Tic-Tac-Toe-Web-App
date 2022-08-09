@@ -1,7 +1,9 @@
+import gameplayModule from "./player-form.mjs";
+
 let content = document.querySelector('.content');
 let gameBoardDiv = document.createElement('div');
 let gameGridDiv = document.createElement('div');
-let gameGridArray = [];
+let boardSpaceArray = [];
 
 gameBoardDiv.classList.add('board');
 gameGridDiv.classList.add('game-grid');
@@ -11,10 +13,27 @@ function addBoardSpaceDivs() {
     let newBoardSpaceDiv = document.createElement('div');
     newBoardSpaceDiv.classList.add('board-space');
     gameGridDiv.appendChild(newBoardSpaceDiv);
-    gameGridArray.push(newBoardSpaceDiv);
+    boardSpaceArray.push(newBoardSpaceDiv);
   }
 }
 
+// function addBoardSpaceButtons() {
+//   for (let boardSpace in boardSpaceArray) {
+//     let button = document.createElement('button');
+//     boardSpaceArray[boardSpace].appendChild(button);
+//     button.addEventListener('click', e => { 
+//       console.log(e.path[1]); 
+//       e.path[1].classList.add('on');
+//       console.log(gameplayModule.retrieveCurrentPlayer());
+//     });
+//   }
+// }
+
+function addItemsToBoard(item) {
+
+}
+
+// Public below ==================================
 let gameBoardModule = {
 
   assembleGameBoard: function() {
@@ -24,8 +43,8 @@ let gameBoardModule = {
   },
 
   disassembleGameBoard: function() {
-    for (let boardSpace in gameGridArray) {
-      gameGridArray[boardSpace].remove();
+    for (let boardSpace in boardSpaceArray) {
+      boardSpaceArray[boardSpace].remove();
     }
     gameBoardDiv.remove();
     gameGridDiv.remove();

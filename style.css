@@ -2,7 +2,7 @@
   --background-color-light: rgb(245, 245, 245);
   --background-color-dark: rgb(175, 175, 175);
   --main-text-color: rgb(80, 80, 80);
-  --secondary-text-color: ;
+  --secondary-text-color: rgb(120, 120, 120);
 }
 
 body {
@@ -19,7 +19,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, .1);
+  z-index: 1;
   border-bottom: solid 3px var(--main-text-color);
 }
 
@@ -63,4 +64,119 @@ h1 {
 .board-space {
   background-color: var(--background-color-dark);
   padding: 15px;
+  position: relative;
+}
+
+.board-space.on {
+  background-color: var(--main-text-color);
+}
+
+.board-space button {
+  border: none;
+  background-color: transparent;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.board-space button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.start-button-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  padding-bottom: 40vh;
+}
+
+.start-button-container button {
+  border: solid 2px transparent;
+  border-radius: 5px;
+  padding: 15px 25px;
+  background-color: var(--background-color-light);
+  color: var(--main-text-color);
+  font-weight: 900;
+  font-size: 35px;
+  box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.15);
+  transition: 0.1s;
+}
+
+.start-button-container button:hover {
+  transform: matrix();
+  transform: translateY(-3px);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.start-button-container button:active {
+  transition: 0.03s;
+  background-color: rgb(235, 235, 235);
+  transform: translateY(0.2px);
+}
+
+.form-container {
+  background-color: var(--background-color-light);
+  padding: 35px 25px;
+  border-radius: 10px;
+  color: var(--main-text-color);
+  font-weight: 900;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.form-container div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-size: 20px;
+}
+
+.form-container button {
+  border: solid var(--background-color-dark);
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-top: 10px;
+  color: var(--main-text-color);
+  font-family: montserrat,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+  background-color: white;
+  transition: 0.1s;
+}
+
+.form-container button:hover {
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.form-container button:active {
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  background-color: var(--background-color-light);
+}
+
+fieldset {
+  margin: 0px;
+  border: solid var(--background-color-dark);
+  border-radius: 10px;
+  background-color: white;
+}
+
+input {
+  border: solid var(--background-color-dark);
+  border-radius: 10px;
+  padding: 15px 20px;
+  color: var(--main-text-color);
+  font-size: 20px;
+}
+
+input:focus-visible {
+  outline: none;
+  border-color: var(--main-text-color);
 }
