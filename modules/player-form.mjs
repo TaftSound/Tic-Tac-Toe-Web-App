@@ -13,11 +13,22 @@ let xButton = null;
 let oButton = null;
 
 const playerFormModule = {
+  getFormContent: function() {
+    let selectedLetter = null;
+    if (xButton.checked) {
+      selectedLetter = "X";
+    }
+    else {
+      selectedLetter = "O";
+    }
+    let playerName = playerNameInput.value;
+    return {playerName, selectedLetter};
+  },
   addSubmitButtonListener: function(someFunction) {
     submitButton.addEventListener('click', someFunction);
     listenerFunction = someFunction;
   },
-  createForm: function(player) {
+  createForm: function(player, lastPlayer) {
     formContainer = document.createElement('div');
     form = document.createElement('form');
     playerNameContainer = document.createElement('div');
@@ -62,6 +73,22 @@ const playerFormModule = {
     radioFieldset.appendChild(xButton);
     radioFieldset.appendChild(oLabel);
     radioFieldset.appendChild(oButton);
+    
+    if (!lastPlayer) {
+      xButton.checked = true;
+    }
+    else if (lastPlayer.selectedLetter === 'X') {
+      oButton.checked = true;
+    }
+    else {
+      xButton.checked = true;
+    }
+
+    if (lastPlayer) {
+      oButton.setAttribute('disabled', 'true');
+      xButton.setAttribute('disabled', 'true');
+      radioFieldset.classList.add('deactivate');
+    }
 
     return formContainer;
   },

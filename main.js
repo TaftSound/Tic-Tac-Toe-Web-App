@@ -33,13 +33,16 @@ const gameplayModule = (function() {
   function playerSignUp() {
     if (!playerOneObject) {
       playerOneObject = playerFormModule.getFormContent();
+      console.log(playerOneObject);
     }
-    else { playerTwoObject = playerFormModule.getFormContent(); }
-
+    else { 
+      playerTwoObject = playerFormModule.getFormContent();
+      console.log(playerTwoObject);
+    }
     playerFormModule.destroyForm();
     if (isTwoPlayer) {
       isTwoPlayer = null;
-      content.appendChild(playerFormModule.createForm('Two'));
+      content.appendChild(playerFormModule.createForm('Two', playerOneObject));
       playerFormModule.addSubmitButtonListener(playerSignUp);
       return;
     }
