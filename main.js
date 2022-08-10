@@ -22,7 +22,7 @@ const gameplayModule = (function() {
 
   function setupGame() {
     gameMode = this.textContent;
-    startButtonModule.removeStartButtons(gameplayModule.startGame);
+    startButtonModule.removeStartButtons();
     setGameMode().then((gameModeBoolean) => {
       isTwoPlayer = gameModeBoolean;
       content.appendChild(playerFormModule.createForm('One'));
@@ -46,7 +46,7 @@ const gameplayModule = (function() {
     if (!playerTwoObject) {
       // Function to attach A.I. opponent;
     }
-    
+
   }
 
   return {
@@ -56,8 +56,6 @@ const gameplayModule = (function() {
     }
   };
 })();
-
-// gameplayModule.mainComponent.appendChild(playerFormModule.createForm('One'));
 
 gameplayModule.displayStartButtons();
 

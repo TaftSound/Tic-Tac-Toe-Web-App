@@ -1,6 +1,7 @@
   let startButtonDiv = null;
   let onePlayerButton = null;
   let twoPlayerButton = null;
+  let listenerFunction = null;
 
 const startButtonModule = {
   createStartButtons: function() {
@@ -21,11 +22,12 @@ const startButtonModule = {
   assignStartButtonListeners: function(someFunction) {
     onePlayerButton.addEventListener('click', someFunction);
     twoPlayerButton.addEventListener('click', someFunction);
+    listenerFunction = someFunction;
   },
 
-  removeStartButtons: function(someFunction) {
-    onePlayerButton.removeEventListener('click', someFunction);
-    twoPlayerButton.removeEventListener('click', someFunction);
+  removeStartButtons: function() {
+    onePlayerButton.removeEventListener('click', listenerFunction);
+    twoPlayerButton.removeEventListener('click', listenerFunction);
     onePlayerButton.remove();
     twoPlayerButton.remove();
     startButtonDiv.remove();
