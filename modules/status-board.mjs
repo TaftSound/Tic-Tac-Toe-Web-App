@@ -63,7 +63,10 @@ const statusBoardModule = {
 
   },
   updateStatusBoard: function(gameplayObject) {
-
+    roundNumber.innerText = `Round ${gameplayObject.roundNumber}!`;
+    playerOneScore.innerText = gameplayObject.playerOneScore;
+    playerTwoScore.innerText = gameplayObject.playerTwoScore;
+    currentTurnPlayerName.innerText = gameplayObject.currentPlayer;
   }
 
 };

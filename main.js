@@ -5,11 +5,16 @@ import statusBoardModule from "./modules/status-board.mjs";
 
 const gameplayModule = (function() {
   let isTwoPlayer = null;
+  let playerOneTurn = null;
+  let roundNumber = 1;
+  let currentPlayer = null;
+  let playerOneScore = 0;
+  let playerTwoScore = 0;
   let playerOneObject = null;
   let playerTwoObject = null;
-  let playerOneTurn = null;
+  const gameStatusObject = { roundNumber, playerOneScore, playerTwoScore, currentPlayer };
   const content = document.querySelector('.content');
-
+  
   function setGameMode(gameMode) {
     return new Promise((resolve, reject) => {
       if (gameMode === 'One Player') {
@@ -25,8 +30,8 @@ const gameplayModule = (function() {
     let gameMode = this.textContent;
     startButtonModule.removeStartButtons();
 
-    setGameMode(gameMode).then((boolean) => {
-      isTwoPlayer = boolean;
+    setGameMode(gameMode).then((answer) => {
+      isTwoPlayer = answer;
       content.appendChild(playerFormModule.createForm('One'));
       playerFormModule.addSubmitButtonListener(playerSignUp);
     });
@@ -60,15 +65,18 @@ const gameplayModule = (function() {
 
   function startGameplay() {
     if (playerOneTurn === true) {
+      gameStatusObject.playerOneScore = 3;
+      statusBoardModule.updateStatusBoard(gameStatusObject);
       gameBoardModule.createGameBoard(playerOneObject.selectedLetter);
       playerOneTurn = false;
     }
     else {
+      statusBoardModule.updateStatusBoard(gameStatusObject);
       gameBoardModule.createGameBoard(playerTwoObject.selectedLetter);
       playerOneTurn = true;
     }
   }
-
+// Public Below Here ==========================================================
   return {
     displayStartButtons: function() {
       content.appendChild(startButtonModule.createStartButtons());
@@ -78,7 +86,6 @@ const gameplayModule = (function() {
 })();
 
 gameplayModule.displayStartButtons();
-
 
 // gameBoardModule.createGameBoard();
 // gameBoardModule.disassembleGameBoard();
