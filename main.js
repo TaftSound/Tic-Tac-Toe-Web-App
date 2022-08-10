@@ -6,6 +6,7 @@ const gameplayModule = (function() {
   let isTwoPlayer = null;
   let playerOneObject = null;
   let playerTwoObject = null;
+  let playerOneTurn = null;
   const content = document.querySelector('.content');
 
   function setGameMode(gameMode) {
@@ -38,6 +39,7 @@ const gameplayModule = (function() {
 
     if (isTwoPlayer === false) {
       // Put function to attach A.I. opponent here;
+      playerOneTurn = true;
       startGameplay();
       return
     }
@@ -47,12 +49,19 @@ const gameplayModule = (function() {
       playerFormModule.addSubmitButtonListener(playerSignUp);
       return;
     }
-
+    playerOneTurn = true;
     startGameplay();
   }
 
   function startGameplay() {
-    
+    if (playerOneTurn === true) {
+      gameBoardModule.assembleGameBoard(playerOneObject.selectedLetter);
+      playerOneTurn = false;
+    }
+    else {
+      gameBoardModule.assembleGameBoard(playerTwoObject.selectedLetter);
+      playerOneTurn = true;
+    }
   }
 
   return {
@@ -64,6 +73,7 @@ const gameplayModule = (function() {
 })();
 
 gameplayModule.displayStartButtons();
+
 
 // gameBoardModule.assembleGameBoard();
 // gameBoardModule.disassembleGameBoard();

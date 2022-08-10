@@ -17,17 +17,16 @@ function addBoardSpaceDivs() {
   }
 }
 
-// function addBoardSpaceButtons() {
-//   for (let boardSpace in boardSpaceArray) {
-//     let button = document.createElement('button');
-//     boardSpaceArray[boardSpace].appendChild(button);
-//     button.addEventListener('click', e => { 
-//       console.log(e.path[1]); 
-//       e.path[1].classList.add('on');
-//       console.log(gameplayModule.retrieveCurrentPlayer());
-//     });
-//   }
-// }
+function addBoardButtons() {
+  for (let boardSpace in boardSpaceArray) {
+    let button = document.createElement('button');
+    boardSpaceArray[boardSpace].appendChild(button);
+    button.addEventListener('click', e => { 
+      console.log(e.path[1]); 
+      e.path[1].classList.add('on');
+    });
+  }
+}
 
 function addItemsToBoard(item) {
 
