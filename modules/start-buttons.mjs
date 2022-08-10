@@ -18,14 +18,14 @@ const startButtonModule = {
     return startButtonDiv;
   },
   
-  assignStartButtonListeners: function(onePlayerFunction, twoPlayerFunction) {
-    onePlayerButton.addEventListener('click', onePlayerFunction);
-    twoPlayerButton.addEventListener('click', twoPlayerFunction);
+  assignStartButtonListeners: function(someFunction) {
+    onePlayerButton.addEventListener('click', someFunction);
+    twoPlayerButton.addEventListener('click', someFunction);
   },
 
-  removeStartButtons: function(onePlayerFunction, twoPlayerFunction) {
-    onePlayerButton.removeEventListener('click', onePlayerFunction);
-    twoPlayerButton.removeEventListener('click', twoPlayerFunction);
+  removeStartButtons: function(someFunction) {
+    onePlayerButton.removeEventListener('click', someFunction);
+    twoPlayerButton.removeEventListener('click', someFunction);
     onePlayerButton.remove();
     twoPlayerButton.remove();
     startButtonDiv.remove();

@@ -1,19 +1,35 @@
-
+let submitButton = null;
+let listenerFunction = null;
+let formContainer = null;
+let form = null;
+let playerNameContainer = null;
+let playerNameLabel = null;
+let playerNameInput = null;
+let radioFieldset = null;
+let legend = null;
+let xLabel = null;
+let oLabel = null;
+let xButton = null;
+let oButton = null;
 
 const playerFormModule = {
+  addSubmitButtonListener: function(someFunction) {
+    submitButton.addEventListener('click', someFunction);
+    listenerFunction = someFunction;
+  },
   createForm: function(player) {
-    const formContainer = document.createElement('div');
-    const form = document.createElement('form');
-    const playerNameContainer = document.createElement('div');
-    const playerNameLabel = document.createElement('label');
-    const playerNameInput = document.createElement('input');
-    const radioFieldset = document.createElement('fieldset');
-    const legend = document.createElement('legend');
-    const xLabel = document.createElement('label');
-    const oLabel = document.createElement('label');
-    const xButton = document.createElement('input');
-    const oButton = document.createElement('input');
-    const submitButton = document.createElement('button');
+    formContainer = document.createElement('div');
+    form = document.createElement('form');
+    playerNameContainer = document.createElement('div');
+    playerNameLabel = document.createElement('label');
+    playerNameInput = document.createElement('input');
+    radioFieldset = document.createElement('fieldset');
+    legend = document.createElement('legend');
+    xLabel = document.createElement('label');
+    oLabel = document.createElement('label');
+    xButton = document.createElement('input');
+    oButton = document.createElement('input');
+    submitButton = document.createElement('button');
 
     formContainer.classList.add('form-container');
     playerNameLabel.setAttribute('for', 'player-name');
@@ -48,6 +64,36 @@ const playerFormModule = {
     radioFieldset.appendChild(oButton);
 
     return formContainer;
+  },
+  destroyForm: function() {
+    submitButton.removeEventListener('click', listenerFunction)
+    
+    xLabel.remove();
+    oLabel.remove();
+    xButton.remove();
+    oButton.remove();
+    legend.remove();
+    radioFieldset.remove();
+    playerNameLabel.remove();
+    playerNameInput.remove();
+    playerNameContainer.remove();
+    submitButton.remove();
+    form.remove();
+    formContainer.remove();
+
+    submitButton = null;
+    listenerFunction = null;
+    formContainer = null;
+    form = null;
+    playerNameContainer = null;
+    playerNameLabel = null;
+    playerNameInput = null;
+    radioFieldset = null;
+    legend = null;
+    xLabel = null;
+    oLabel = null;
+    xButton = null;
+    oButton = null;
   }
 };
 
