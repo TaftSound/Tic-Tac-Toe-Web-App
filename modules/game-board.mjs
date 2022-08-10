@@ -35,13 +35,13 @@ function addItemsToBoard(item) {
 // Public below ==================================
 let gameBoardModule = {
 
-  assembleGameBoard: function() {
+  createGameBoard: function() {
     content.appendChild(gameBoardDiv);
     gameBoardDiv.appendChild(gameGridDiv);
     addBoardSpaceDivs();
   },
 
-  disassembleGameBoard: function() {
+  destroyGameBoard: function() {
     for (let boardSpace in boardSpaceArray) {
       boardSpaceArray[boardSpace].remove();
     }

@@ -1,6 +1,7 @@
 import gameBoardModule from "./modules/game-board.mjs";
 import playerFormModule from "./modules/player-form.mjs";
 import startButtonModule from "./modules/start-buttons.mjs";
+import statusBoardModule from "./modules/status-board.mjs";
 
 const gameplayModule = (function() {
   let isTwoPlayer = null;
@@ -40,6 +41,8 @@ const gameplayModule = (function() {
     if (isTwoPlayer === false) {
       // Put function to attach A.I. opponent here;
       playerOneTurn = true;
+      let statusBoard = statusBoardModule.createStatusBoard(playerOneObject.playerName, 'computer');
+      content.appendChild(statusBoard);
       startGameplay();
       return
     }
@@ -50,16 +53,18 @@ const gameplayModule = (function() {
       return;
     }
     playerOneTurn = true;
+    let statusBoard = statusBoardModule.createStatusBoard(playerOneObject.playerName, playerTwoObject.playerName);
+    content.appendChild(statusBoard);
     startGameplay();
   }
 
   function startGameplay() {
     if (playerOneTurn === true) {
-      gameBoardModule.assembleGameBoard(playerOneObject.selectedLetter);
+      gameBoardModule.createGameBoard(playerOneObject.selectedLetter);
       playerOneTurn = false;
     }
     else {
-      gameBoardModule.assembleGameBoard(playerTwoObject.selectedLetter);
+      gameBoardModule.createGameBoard(playerTwoObject.selectedLetter);
       playerOneTurn = true;
     }
   }
@@ -75,5 +80,5 @@ const gameplayModule = (function() {
 gameplayModule.displayStartButtons();
 
 
-// gameBoardModule.assembleGameBoard();
+// gameBoardModule.createGameBoard();
 // gameBoardModule.disassembleGameBoard();
