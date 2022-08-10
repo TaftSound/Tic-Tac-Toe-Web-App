@@ -3,13 +3,12 @@ import playerFormModule from "./modules/player-form.mjs";
 import startButtonModule from "./modules/start-buttons.mjs";
 
 const gameplayModule = (function() {
-  let gameMode = null;
   let isTwoPlayer = null;
   let playerOneObject = null;
   let playerTwoObject = null;
   const content = document.querySelector('.content');
 
-  function setGameMode() {
+  function setGameMode(gameMode) {
     return new Promise((resolve, reject) => {
       if (gameMode === 'One Player') {
         resolve(false);
@@ -21,35 +20,39 @@ const gameplayModule = (function() {
   }
 
   function setupGame() {
-    gameMode = this.textContent;
+    let gameMode = this.textContent;
     startButtonModule.removeStartButtons();
-    setGameMode().then((gameModeBoolean) => {
-      isTwoPlayer = gameModeBoolean;
+
+    setGameMode(gameMode).then((boolean) => {
+      isTwoPlayer = boolean;
       content.appendChild(playerFormModule.createForm('One'));
       playerFormModule.addSubmitButtonListener(playerSignUp);
     });
   }
 
   function playerSignUp() {
-    if (!playerOneObject) {
-      playerOneObject = playerFormModule.getFormContent();
-      console.log(playerOneObject);
-    }
-    else { 
-      playerTwoObject = playerFormModule.getFormContent();
-      console.log(playerTwoObject);
-    }
+    if (!playerOneObject) { playerOneObject = playerFormModule.getFormContent(); }
+    else { playerTwoObject = playerFormModule.getFormContent(); }
+
     playerFormModule.destroyForm();
-    if (isTwoPlayer) {
+
+    if (isTwoPlayer === false) {
+      // Put function to attach A.I. opponent here;
+      startGameplay();
+      return
+    }
+    else if (isTwoPlayer) {
       isTwoPlayer = null;
       content.appendChild(playerFormModule.createForm('Two', playerOneObject));
       playerFormModule.addSubmitButtonListener(playerSignUp);
       return;
     }
-    if (!playerTwoObject) {
-      // Function to attach A.I. opponent;
-    }
 
+    startGameplay();
+  }
+
+  function startGameplay() {
+    
   }
 
   return {
