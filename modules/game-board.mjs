@@ -1,4 +1,3 @@
-import gameplayModule from "./player-form.mjs";
 
 let gameBoardDiv = document.createElement('div');
 let gameGridDiv = document.createElement('div');

@@ -63,34 +63,19 @@ const gameplayModule = (function() {
     }
     let statusBoard = statusBoardModule.createStatusBoard(playerOneObject.playerName, playerTwoObject.playerName);
     content.appendChild(statusBoard);
-    startGameplay();
-  }
-
-  function startGameplay() {
-    let playerLetter = playerOneObject.selectedLetter;
     content.appendChild(gameBoardModule.createGameBoard());
-    gameBoardModule.setCurrentLetter(playerLetter);
-    gameBoardModule.setCurrentFunctions(gameplayLoop);
-    statusBoardModule.updateStatusBoard(gameStatusObject);
-
-    function gameplayLoop() {
-      playerOneTurn = !playerOneTurn;
-      if (playerOneTurn === true) { playerLetter = playerOneObject.selectedLetter; }
-      else { playerLetter = playerTwoObject.selectedLetter; }
-      gameBoardModule.setCurrentLetter(playerLetter);
-      gameBoardModule.setCurrentFunctions(gameplayLoop);
-      statusBoardModule.updateStatusBoard(gameStatusObject);
-    }
+    startGameplayLoop();
   }
 
-
-
-  function switchPlayer() {
-    // playerOneTurn = !playerOneTurn
-    // if (playerOneTurn === true) { playerLetter = playerOneObject.selectedLetter; }
-    // else { playerLetter = playerTwoObject.selectedLetter; }
-    gameBoardModule.switchCurrentPlayer();
+  function startGameplayLoop() {
+    if (playerOneTurn === true) { currentPlayer = playerOneObject; }
+    else { currentPlayer = playerTwoObject; }
+    statusBoardModule.setCurrentPlayer(currentPlayer.playerName);
+    gameBoardModule.setCurrentLetter(currentPlayer.selectedLetter);
+    gameBoardModule.setCurrentFunctions(startGameplayLoop);
+    playerOneTurn = !playerOneTurn;
   }
+
 // Public Below Here ==========================================================
   return {
     displayStartButtons: function() {

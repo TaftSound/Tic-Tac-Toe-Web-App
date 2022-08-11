@@ -35,7 +35,7 @@ const statusBoardModule = {
     playerTwoScore.classList.add('player-score');
     currentTurnFieldset.classList.add('player-turn');
 
-    roundNumber.innerText = 'Round One!';
+    roundNumber.innerText = 'Round 1!';
     scoreLegend.innerText = 'Score';
     playerOneName.innerText = pOneName;
     playerOneScore.innerText = '0';
@@ -62,6 +62,11 @@ const statusBoardModule = {
   destroyStatusBoard: function() {
 
   },
+
+  setCurrentPlayer: function(name) {
+    currentTurnPlayerName.innerText = name;
+  },
+
   updateStatusBoard: function(gameplayObject) {
     roundNumber.innerText = `Round ${gameplayObject.roundNumber}!`;
     playerOneScore.innerText = gameplayObject.playerOneScore;
