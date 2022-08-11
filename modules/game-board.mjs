@@ -1,9 +1,8 @@
 import gameplayModule from "./player-form.mjs";
 
-let content = document.querySelector('.content');
 let gameBoardDiv = document.createElement('div');
 let gameGridDiv = document.createElement('div');
-let boardSpaceArray = [];
+let boardSpaceArray = ['', '', '', '', '', '', '', '', ''];
 
 gameBoardDiv.classList.add('board');
 gameGridDiv.classList.add('game-grid');
@@ -36,9 +35,9 @@ function addItemsToBoard(item) {
 let gameBoardModule = {
 
   createGameBoard: function() {
-    content.appendChild(gameBoardDiv);
     gameBoardDiv.appendChild(gameGridDiv);
     addBoardSpaceDivs();
+    return gameBoardDiv
   },
 
   destroyGameBoard: function() {

@@ -2,6 +2,7 @@ import gameBoardModule from "./modules/game-board.mjs";
 import playerFormModule from "./modules/player-form.mjs";
 import startButtonModule from "./modules/start-buttons.mjs";
 import statusBoardModule from "./modules/status-board.mjs";
+import checkGameModule from "./modules/check-game-over.mjs";
 
 const gameplayModule = (function() {
   let isTwoPlayer = null;
@@ -67,12 +68,12 @@ const gameplayModule = (function() {
     if (playerOneTurn === true) {
       gameStatusObject.playerOneScore = 3;
       statusBoardModule.updateStatusBoard(gameStatusObject);
-      gameBoardModule.createGameBoard(playerOneObject.selectedLetter);
+      content.appendChild(gameBoardModule.createGameBoard(playerOneObject.selectedLetter));
       playerOneTurn = false;
     }
     else {
       statusBoardModule.updateStatusBoard(gameStatusObject);
-      gameBoardModule.createGameBoard(playerTwoObject.selectedLetter);
+      content.appendChild(gameBoardModule.createGameBoard(playerTwoObject.selectedLetter));
       playerOneTurn = true;
     }
   }
@@ -86,6 +87,16 @@ const gameplayModule = (function() {
 })();
 
 gameplayModule.displayStartButtons();
+
+
+// function isThisTruthy(thisIsTruthy) {
+//   if (thisIsTruthy) {
+//     console.log('truthy');
+//   }
+//   else {
+//     console.log('falsy');
+//   }
+// }
 
 // gameBoardModule.createGameBoard();
 // gameBoardModule.disassembleGameBoard();
