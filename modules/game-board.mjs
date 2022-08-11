@@ -63,6 +63,14 @@ let gameBoardModule = {
     }
   },
 
+  retrieveBoardState: function() {
+    let boardState = [];
+    for (let button in boardButtonArray) {
+      boardState.push(boardButtonArray[button].textContent)
+    }
+    return boardState;
+  },
+
   destroyGameBoard: function() {
     for (let boardSpace in boardSpaceArray) {
       boardSpaceArray[boardSpace].remove();

@@ -73,6 +73,8 @@ const gameplayModule = (function() {
   }
 
   function gameplayLoop() {
+    console.log(gameBoardModule.retrieveBoardState());
+    // console.log(checkGameModule.isGameWon(gameBoardModule.retrieveBoardState()));
     if (playerOneTurn === true) { currentPlayer = playerOneObject; }
     else { currentPlayer = playerTwoObject; }
     statusBoardModule.setCurrentPlayer(currentPlayer.playerName);
