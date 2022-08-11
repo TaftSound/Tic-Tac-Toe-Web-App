@@ -56,7 +56,7 @@ let gameBoardModule = {
     currentLetter = letter;
   },
 
-  setCurrentFunctions: function(...functions) {
+  setListenerFunctions: function(...functions) {
     eventFunctionArray = [];
     for (let eachFunction in functions) {
       eventFunctionArray.push(functions[eachFunction]);

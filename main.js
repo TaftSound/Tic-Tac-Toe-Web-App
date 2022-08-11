@@ -61,18 +61,22 @@ const gameplayModule = (function() {
         selectedLetter: letter
        };
     }
+    startGameplay();
+  }
+
+  function startGameplay() {
     let statusBoard = statusBoardModule.createStatusBoard(playerOneObject.playerName, playerTwoObject.playerName);
     content.appendChild(statusBoard);
     content.appendChild(gameBoardModule.createGameBoard());
-    startGameplayLoop();
+    gameBoardModule.setListenerFunctions(gameplayLoop);
+    gameplayLoop();
   }
 
-  function startGameplayLoop() {
+  function gameplayLoop() {
     if (playerOneTurn === true) { currentPlayer = playerOneObject; }
     else { currentPlayer = playerTwoObject; }
     statusBoardModule.setCurrentPlayer(currentPlayer.playerName);
     gameBoardModule.setCurrentLetter(currentPlayer.selectedLetter);
-    gameBoardModule.setCurrentFunctions(startGameplayLoop);
     playerOneTurn = !playerOneTurn;
   }
 
