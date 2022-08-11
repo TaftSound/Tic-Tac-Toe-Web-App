@@ -2,7 +2,10 @@ import gameplayModule from "./player-form.mjs";
 
 let gameBoardDiv = document.createElement('div');
 let gameGridDiv = document.createElement('div');
-let boardSpaceArray = ['', '', '', '', '', '', '', '', ''];
+let boardSpaceArray = [];
+let boardButtonArray = [];
+let eventFunctionArray = [];
+let currentLetter = null;
 
 gameBoardDiv.classList.add('board');
 gameGridDiv.classList.add('game-grid');
@@ -20,15 +23,24 @@ function addBoardButtons() {
   for (let boardSpace in boardSpaceArray) {
     let button = document.createElement('button');
     boardSpaceArray[boardSpace].appendChild(button);
-    button.addEventListener('click', e => { 
-      console.log(e.path[1]); 
-      e.path[1].classList.add('on');
-    });
+    boardButtonArray.push(button);
+    addEventListeners();
   }
 }
 
-function addItemsToBoard(item) {
+function addEventListeners() {
+  for (let button in boardButtonArray) {
+    button = boardButtonArray[button];
+    button.addEventListener('click', (e) => { buttonPressed(e); });
+  }
+}
 
+function buttonPressed(event) { 
+    let button = event.currentTarget;
+    if (button.textContent) { return; }
+    button.textContent = currentLetter;
+    for (let eachFunction in eventFunctionArray) { 
+      eventFunctionArray[eachFunction](); }
 }
 
 // Public below ==================================
@@ -37,7 +49,19 @@ let gameBoardModule = {
   createGameBoard: function() {
     gameBoardDiv.appendChild(gameGridDiv);
     addBoardSpaceDivs();
-    return gameBoardDiv
+    addBoardButtons();
+    return gameBoardDiv;
+  },
+
+  setCurrentLetter: function(letter) {
+    currentLetter = letter;
+  },
+
+  setCurrentFunctions: function(...functions) {
+    eventFunctionArray = [];
+    for (let eachFunction in functions) {
+      eventFunctionArray.push(functions[eachFunction]);
+    }
   },
 
   destroyGameBoard: function() {

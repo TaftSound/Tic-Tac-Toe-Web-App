@@ -6,7 +6,7 @@ import checkGameModule from "./modules/check-game-over.mjs";
 
 const gameplayModule = (function() {
   let isTwoPlayer = null;
-  let playerOneTurn = null;
+  let playerOneTurn = true;
   let roundNumber = 1;
   let currentPlayer = null;
   let playerOneScore = 0;
@@ -33,49 +33,63 @@ const gameplayModule = (function() {
 
     setGameMode(gameMode).then((answer) => {
       isTwoPlayer = answer;
-      content.appendChild(playerFormModule.createForm('One'));
-      playerFormModule.addSubmitButtonListener(playerSignUp);
+      content.appendChild(playerFormModule.createForm('Player One'));
+      playerFormModule.addSubmitButtonListener(signUpPlayers);
     });
   }
 
-  function playerSignUp() {
+  function signUpPlayers() {
     if (!playerOneObject) { playerOneObject = playerFormModule.getFormContent(); }
     else { playerTwoObject = playerFormModule.getFormContent(); }
 
     playerFormModule.destroyForm();
 
-    if (isTwoPlayer === false) {
-      // Put function to attach A.I. opponent here;
-      playerOneTurn = true;
-      let statusBoard = statusBoardModule.createStatusBoard(playerOneObject.playerName, 'computer');
-      content.appendChild(statusBoard);
-      startGameplay();
-      return
-    }
-    else if (isTwoPlayer) {
+    if (isTwoPlayer) {
       isTwoPlayer = null;
-      content.appendChild(playerFormModule.createForm('Two', playerOneObject));
-      playerFormModule.addSubmitButtonListener(playerSignUp);
+      content.appendChild(playerFormModule.createForm('Player Two', playerOneObject));
+      playerFormModule.addSubmitButtonListener(signUpPlayers);
       return;
     }
-    playerOneTurn = true;
+    if (!playerTwoObject) {
+      let letter;
+      if (playerOneObject.selectedLetter === "X") {
+        letter = 'O';
+      }
+      else letter = 'X';
+      playerTwoObject = {
+        playerName: 'Computer',
+        selectedLetter: letter
+       };
+    }
     let statusBoard = statusBoardModule.createStatusBoard(playerOneObject.playerName, playerTwoObject.playerName);
     content.appendChild(statusBoard);
     startGameplay();
   }
 
   function startGameplay() {
-    if (playerOneTurn === true) {
-      gameStatusObject.playerOneScore = 3;
+    let playerLetter = playerOneObject.selectedLetter;
+    content.appendChild(gameBoardModule.createGameBoard());
+    gameBoardModule.setCurrentLetter(playerLetter);
+    gameBoardModule.setCurrentFunctions(gameplayLoop);
+    statusBoardModule.updateStatusBoard(gameStatusObject);
+
+    function gameplayLoop() {
+      playerOneTurn = !playerOneTurn;
+      if (playerOneTurn === true) { playerLetter = playerOneObject.selectedLetter; }
+      else { playerLetter = playerTwoObject.selectedLetter; }
+      gameBoardModule.setCurrentLetter(playerLetter);
+      gameBoardModule.setCurrentFunctions(gameplayLoop);
       statusBoardModule.updateStatusBoard(gameStatusObject);
-      content.appendChild(gameBoardModule.createGameBoard(playerOneObject.selectedLetter));
-      playerOneTurn = false;
     }
-    else {
-      statusBoardModule.updateStatusBoard(gameStatusObject);
-      content.appendChild(gameBoardModule.createGameBoard(playerTwoObject.selectedLetter));
-      playerOneTurn = true;
-    }
+  }
+
+
+
+  function switchPlayer() {
+    // playerOneTurn = !playerOneTurn
+    // if (playerOneTurn === true) { playerLetter = playerOneObject.selectedLetter; }
+    // else { playerLetter = playerTwoObject.selectedLetter; }
+    gameBoardModule.switchCurrentPlayer();
   }
 // Public Below Here ==========================================================
   return {
@@ -89,8 +103,8 @@ const gameplayModule = (function() {
 gameplayModule.displayStartButtons();
 
 
-// function isThisTruthy(thisIsTruthy) {
-//   if (thisIsTruthy) {
+// function isThisTruthy(value) {
+//   if (value) {
 //     console.log('truthy');
 //   }
 //   else {

@@ -56,7 +56,7 @@ const playerFormModule = {
     oButton.setAttribute('name', 'player-letter');
     submitButton.setAttribute('type', 'button');
 
-    playerNameLabel.textContent = `Player ${player} Name:`;
+    playerNameLabel.textContent = `${player} Name:`;
     legend.textContent = 'Choose your letter:';
     xLabel.textContent = 'X';
     oLabel.textContent = 'O';
