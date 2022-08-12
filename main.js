@@ -74,9 +74,9 @@ const gameplayModule = (function() {
   }
 
   function gameplayLoop() {
-    let winner = checkGameModule.isGameWon(gameBoardModule.retrieveBoardState());
-    if (winner) {
-      displayRoundWinner(winner);
+    let roundResult = checkGameModule.isGameOver(gameBoardModule.retrieveBoardState());
+    if (roundResult) {
+      displayRoundResult(roundResult);
       setTimeout(startNextRound, 4500);
       return;
     }
@@ -87,14 +87,19 @@ const gameplayModule = (function() {
     playerOneTurn = !playerOneTurn;
   }
 
-  function displayRoundWinner(winner) {
-    if (playerOneObject.selectedLetter === winner) { 
+  function displayRoundResult(roundResult) {
+    if (playerOneObject.selectedLetter === roundResult) { 
       playerOneScore++;
-      displayMessageModule.displayMessage(`${playerTwoObject.playerName} wins round ${roundNumber}`);
+      displayMessageModule.displayMessage(`${playerOneObject.playerName} wins round ${roundNumber}`);
     }
-    else { 
+    else if (playerTwoObject.selectedLetter === roundResult) { 
       playerTwoScore++;
       displayMessageModule.displayMessage(`${playerTwoObject.playerName} wins round ${roundNumber}`);
+    }
+    else {
+      playerOneScore++;
+      playerTwoScore++;
+      displayMessageModule.displayMessage("The round ends in a tie!");
     }
     gameBoardModule.minimize();
     statusBoardModule.minimize();
