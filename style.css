@@ -65,6 +65,11 @@ h2 {
   display: flex;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
 }
+.board.minimize {
+  height: 315px;
+  width: 315px;
+  /* box-sizing: unset; */
+}
 .game-grid {
   background-color: var(--background-color-light);
   flex: auto;
@@ -80,9 +85,6 @@ h2 {
   padding: 15px;
   position: relative;
 }
-.board-space.on {
-  background-color: var(--main-text-color);
-}
 .board-space button {
   border: none;
   background-color: transparent;
@@ -92,8 +94,14 @@ h2 {
   left: 0;
   right: 0;
 }
+.board-space button:disabled {
+  color: var(--main-text-color);
+}
 .board-space button:hover {
   background-color: rgba(0, 0, 0, 0.1);
+}
+.board-space button:disabled:hover {
+  background-color: transparent;
 }
 
 /* Start Buttons Styling =============================================== */
@@ -206,6 +214,9 @@ input:focus-visible {
   color: var(--main-text-color);
   font-weight: 900;
   font-size: 24px;
+}
+.status-board.minimize {
+  height: 315px;
 }
 .status-board fieldset {
   padding: 0px 15px;

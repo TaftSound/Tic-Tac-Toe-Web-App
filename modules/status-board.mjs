@@ -44,9 +44,9 @@ const statusBoardModule = {
     currentTurnLegend.innerText = 'Turn';
     currentTurnPlayerName.innerText = pOneName;
 
+    statusBoard.appendChild(currentTurnFieldset);
     statusBoard.appendChild(roundNumber);
     statusBoard.appendChild(scoreFieldset);
-    statusBoard.appendChild(currentTurnFieldset);
     currentTurnFieldset.appendChild(currentTurnLegend);
     currentTurnFieldset.appendChild(currentTurnPlayerName);
     scoreFieldset.appendChild(scoreLegend);
@@ -67,11 +67,23 @@ const statusBoardModule = {
     currentTurnPlayerName.innerText = name;
   },
 
-  updateStatusBoard: function(gameplayObject) {
-    roundNumber.innerText = `Round ${gameplayObject.roundNumber}!`;
-    playerOneScore.innerText = gameplayObject.playerOneScore;
-    playerTwoScore.innerText = gameplayObject.playerTwoScore;
-    currentTurnPlayerName.innerText = gameplayObject.currentPlayer;
+  updateScore: function(pOneScore, pTwoScore) {
+    playerOneScore.innerText = pOneScore;
+    playerTwoScore.innerText = pTwoScore;
+  },
+
+  updateRoundNumber: function(newRoundNumber) {
+    roundNumber.innerText = `Round ${newRoundNumber}!`;
+  },
+
+  minimize: function() {
+    statusBoard.classList.add('minimize');
+    currentTurnFieldset.remove();
+  },
+
+  maximize: function() {
+    statusBoard.classList.remove('minimize');
+    statusBoard.insertBefore(currentTurnFieldset, roundNumber);
   }
 
 };

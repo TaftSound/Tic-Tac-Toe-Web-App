@@ -4,15 +4,13 @@ let winningPatterns = [ [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [
 const checkGameModule = {
   isGameWon: function(gameArray) {
     for (let pattern of winningPatterns) {
-      if (gameArray[pattern[0]] === '') {
-        break;
-      }
-      if (gameArray[pattern[0]] === gameArray[pattern[1]] && 
+      if (gameArray[pattern[0]] === '') { /* do nothing */ }
+      else if (gameArray[pattern[0]] === gameArray[pattern[1]] && 
         gameArray[pattern[0]] === gameArray[pattern[2]]) {
           return gameArray[pattern[0]];
         }
     }
-    return 'No win';
+    return false;
   }
 };
 

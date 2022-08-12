@@ -73,13 +73,35 @@ const gameplayModule = (function() {
   }
 
   function gameplayLoop() {
-    console.log(gameBoardModule.retrieveBoardState());
-    // console.log(checkGameModule.isGameWon(gameBoardModule.retrieveBoardState()));
+    // console.log(gameBoardModule.retrieveBoardState());
+    let winner = checkGameModule.isGameWon(gameBoardModule.retrieveBoardState());
+    if (winner) {
+      if (playerOneObject.selectedLetter === winner) { playerOneScore++; }
+      else { playerTwoScore++; }
+      displayRoundWinner();
+      setTimeout(startNextRound, 3000);
+      return;
+    }
     if (playerOneTurn === true) { currentPlayer = playerOneObject; }
     else { currentPlayer = playerTwoObject; }
     statusBoardModule.setCurrentPlayer(currentPlayer.playerName);
     gameBoardModule.setCurrentLetter(currentPlayer.selectedLetter);
     playerOneTurn = !playerOneTurn;
+  }
+
+  function displayRoundWinner() {
+    gameBoardModule.minimize();
+    statusBoardModule.minimize();
+    statusBoardModule.updateScore(playerOneScore, playerTwoScore);
+  }
+
+  function startNextRound() {
+    roundNumber = roundNumber + 1;
+    statusBoardModule.updateRoundNumber(roundNumber);
+    statusBoardModule.maximize();
+    gameBoardModule.maximize();
+    gameBoardModule.resetBoardState();
+    gameplayLoop();
   }
 
 // Public Below Here ==========================================================

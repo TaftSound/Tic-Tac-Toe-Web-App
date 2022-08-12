@@ -71,6 +71,26 @@ let gameBoardModule = {
     return boardState;
   },
 
+  resetBoardState: function() {
+    for (let button in boardButtonArray) {
+      boardButtonArray[button].textContent = '';
+    }
+  },
+
+  minimize: function() {
+    gameBoardDiv.classList.add('minimize');
+    for (let button in boardButtonArray) {
+      boardButtonArray[button].disabled = true;
+    }
+  },
+
+  maximize: function() {
+    gameBoardDiv.classList.remove('minimize');
+    for (let button in boardButtonArray) {
+      boardButtonArray[button].disabled = false;
+    }
+  },
+
   destroyGameBoard: function() {
     for (let boardSpace in boardSpaceArray) {
       boardSpaceArray[boardSpace].remove();
