@@ -107,7 +107,8 @@ const gameplayModule = (function() {
   }
 
   function startNextRound() {
-    displayMessageModule.removeMessage();
+    displayMessageModule.removeMessage(); 
+    console.log(roundNumber); // 
     roundNumber = roundNumber + 1;
     statusBoardModule.updateRoundNumber(roundNumber);
     statusBoardModule.maximize();

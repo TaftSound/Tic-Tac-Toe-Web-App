@@ -33,6 +33,9 @@ const checkGameModule = {
     console.log(tie);
     if (winner) { return winner; }
     if (tie) { return tie; }
+  },
+  getWinningPatterns: function() {
+    return winningPatterns;
   }
 };
 
