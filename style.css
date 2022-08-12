@@ -42,10 +42,27 @@ h2 {
   /* border: solid var(--background-color-dark); */
   margin: 0px;
 }
+h3 {
+  font-size: 45px;
+  margin: 0px;
+  margin-top: 25px;
+  padding: 10px 25px;
+  color: var(--main-text-color);
+  background-color: white;
+  border-radius: 10px;
+  border: solid 7.5px var(--background-color-light);
+}
 
 /* Main Container Styling =============================================== */
 .content {
   flex: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--background-color-dark);
+}
+/* Styling for message insert above main content ==================== */
+.message {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -66,8 +83,8 @@ h2 {
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
 }
 .board.minimize {
-  height: 315px;
-  width: 315px;
+  height: 60vh;
+  width: 60vh;
   /* box-sizing: unset; */
 }
 .game-grid {
@@ -200,7 +217,7 @@ input:focus-visible {
 /* Status Board Styling =============================================== */
 .status-board {
   height: clamp(350px, 75vh, 600px);
-  width: clamp(225px, 30vw, 1000px);
+  width: clamp(225px, 30vw, 325px);
   background-color: var(--background-color-light);
   box-sizing: border-box;
   margin: 15px;
@@ -216,7 +233,8 @@ input:focus-visible {
   font-size: 24px;
 }
 .status-board.minimize {
-  height: 315px;
+  height: 60vh;
+  justify-content: center;
 }
 .status-board fieldset {
   padding: 0px 15px;

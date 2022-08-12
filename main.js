@@ -3,6 +3,7 @@ import playerFormModule from "./modules/player-form.mjs";
 import startButtonModule from "./modules/start-buttons.mjs";
 import statusBoardModule from "./modules/status-board.mjs";
 import checkGameModule from "./modules/check-game-over.mjs";
+import displayMessageModule from "./modules/disply-message.mjs";
 
 const gameplayModule = (function() {
   let isTwoPlayer = null;
@@ -73,13 +74,10 @@ const gameplayModule = (function() {
   }
 
   function gameplayLoop() {
-    // console.log(gameBoardModule.retrieveBoardState());
     let winner = checkGameModule.isGameWon(gameBoardModule.retrieveBoardState());
     if (winner) {
-      if (playerOneObject.selectedLetter === winner) { playerOneScore++; }
-      else { playerTwoScore++; }
-      displayRoundWinner();
-      setTimeout(startNextRound, 3000);
+      displayRoundWinner(winner);
+      setTimeout(startNextRound, 4500);
       return;
     }
     if (playerOneTurn === true) { currentPlayer = playerOneObject; }
@@ -89,13 +87,22 @@ const gameplayModule = (function() {
     playerOneTurn = !playerOneTurn;
   }
 
-  function displayRoundWinner() {
+  function displayRoundWinner(winner) {
+    if (playerOneObject.selectedLetter === winner) { 
+      playerOneScore++;
+      displayMessageModule.displayMessage(`${playerTwoObject.playerName} wins round ${roundNumber}`);
+    }
+    else { 
+      playerTwoScore++;
+      displayMessageModule.displayMessage(`${playerTwoObject.playerName} wins round ${roundNumber}`);
+    }
     gameBoardModule.minimize();
     statusBoardModule.minimize();
     statusBoardModule.updateScore(playerOneScore, playerTwoScore);
   }
 
   function startNextRound() {
+    displayMessageModule.removeMessage();
     roundNumber = roundNumber + 1;
     statusBoardModule.updateRoundNumber(roundNumber);
     statusBoardModule.maximize();
@@ -114,7 +121,6 @@ const gameplayModule = (function() {
 })();
 
 gameplayModule.displayStartButtons();
-
 
 // function isThisTruthy(value) {
 //   if (value) {
