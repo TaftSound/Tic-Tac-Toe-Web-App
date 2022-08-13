@@ -1,17 +1,17 @@
 
 import checkGameModule from "./check-game-over.mjs";
-let testGameBoard = ['X', '', 'X', 'O', '', 'O', '', 'X', ''];
+let testGameBoard = ['', '', '', '', '', '', '', '', ''];
 let winningPatterns = checkGameModule.getWinningPatterns();
 let xScore = 0;
 let oScore = 0;
+let playerOneLetter = 'X';
+let playerTwoLetter = 'O';
+let bestMoveIndex = null;
 
 function evaluateMove(gameBoardArray) {
   xScore = 0;
   oScore = 0;
 
-  if(gameWon(gameBoardArray)) {
-    return { xScore, oScore };
-  }
   checkTwoOfThree(gameBoardArray);
   checkCenter(gameBoardArray);
   checkCorner(gameBoardArray);
@@ -81,21 +81,66 @@ function checkMiddleEdge(gameBoardArray) {
   }
 }
 
-console.log(evaluateMove(testGameBoard));
+function getOpenSpaces(gameBoardArray) {
+  let openSpaces = [];
+  for (let space in gameBoardArray) {
+    if(gameBoardArray[space]) { /* do nothing */ }
+    else { openSpaces.push(space); }
+  }
+  console.log(openSpaces);
+  return openSpaces;
+}
+
+// console.log(evaluateMove(testGameBoard));
+getOpenSpaces(testGameBoard);
+
 
 const minimaxModule = {
-  minimaxEval: function(position, depth, maximizingPlayer, gameBoardArray) {
-    if (depth === 0 || isGameOver(gameBoardArray)) {
-      // Return static evaluation of position;
+  minimaxEval: function(depth, maximizingPlayer, gameBoardArray) {
+    if(gameWon(gameBoardArray)) {
+      if (playerTwoLetter === 'X') { return xScore; }
+      else { return oScore; }
     }
+    if (depth === 0) {
+      evaluateMove(gameBoardArray);
+      if (playerTwoLetter === 'X') { return (xScore - oScore); }
+      else { return (oScore - xScore); }
+    }
+    let openIndexes = getOpenSpaces(gameBoardArray);
 
     if (maximizingPlayer) {
-      maxEval = -Infinity;
+      let maxEval = -Infinity;
+      let index = null;
+      bestMoveIndex = null;
+      for (let eachIndex in openIndexes) {
+        index = openIndexes[eachIndex];
+        gameBoardArray[index] = playerTwoLetter;
+        let evaluation = this.minimaxEval((depth -1), false, gameBoardArray);
+        if (!bestMoveIndex) { bestMoveIndex = index; }
+        else if (evaluation > maxEval) { bestMoveIndex = index; }
+        maxEval = Math.max(maxEval, evaluation);
+        gameBoardArray[index] = '';
+      }
+      return maxEval;
+    }
+    else {
+      let minEval = Infinity;
+      let index = null;
+      for (let eachIndex in openIndexes) {
+        index = openIndexes[eachIndex];
+        gameBoardArray[index] = playerOneLetter;
+        let evaluation = this.minimaxEval((depth -1), true, gameBoardArray);
+        minEval = Math.min(minEval, evaluation);
+        gameBoardArray[index] = '';
+      }
+      return minEval;
 
     }
-
-    // return bestMove;
   }
 };
+
+minimaxModule.minimaxEval(3, true, testGameBoard);
+console.log(bestMoveIndex);
+// console.log(gameWon(testGameBoard));
 
 export default minimaxModule;
