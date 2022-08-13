@@ -63,6 +63,22 @@ let gameBoardModule = {
     }
   },
 
+  freezeBoard: function() {
+    for (let button in boardButtonArray) {
+      boardButtonArray[button].disabled = true;
+    }
+  },
+
+  unfreezeBoard: function() {
+    for (let button in boardButtonArray) {
+      boardButtonArray[button].disabled = false;
+    }
+  },
+
+  setAiMove: function(index) {
+    boardButtonArray[index].textContent = currentLetter;
+  },
+
   retrieveBoardState: function() {
     let boardState = [];
     for (let button in boardButtonArray) {
@@ -79,16 +95,12 @@ let gameBoardModule = {
 
   minimize: function() {
     gameBoardDiv.classList.add('minimize');
-    for (let button in boardButtonArray) {
-      boardButtonArray[button].disabled = true;
-    }
+    this.freezeBoard();
   },
 
   maximize: function() {
     gameBoardDiv.classList.remove('minimize');
-    for (let button in boardButtonArray) {
-      boardButtonArray[button].disabled = false;
-    }
+    this.unfreezeBoard();
   },
 
   destroyGameBoard: function() {

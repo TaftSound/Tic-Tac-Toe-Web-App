@@ -4,6 +4,7 @@ import startButtonModule from "./modules/start-buttons.mjs";
 import statusBoardModule from "./modules/status-board.mjs";
 import checkGameModule from "./modules/check-game-over.mjs";
 import displayMessageModule from "./modules/disply-message.mjs";
+import minimaxModule from "./modules/minimax-ai.mjs";
 
 const gameplayModule = (function() {
   let isTwoPlayer = null;
@@ -52,14 +53,15 @@ const gameplayModule = (function() {
       return;
     }
     if (!playerTwoObject) {
-      let letter;
+      let letter = null;
       if (playerOneObject.selectedLetter === "X") {
         letter = 'O';
       }
       else letter = 'X';
       playerTwoObject = {
         playerName: 'Computer',
-        selectedLetter: letter
+        selectedLetter: letter,
+        isAi: true,
        };
     }
     startGameplay();
@@ -85,6 +87,16 @@ const gameplayModule = (function() {
     statusBoardModule.setCurrentPlayer(currentPlayer.playerName);
     gameBoardModule.setCurrentLetter(currentPlayer.selectedLetter);
     playerOneTurn = !playerOneTurn;
+    if (currentPlayer === playerTwoObject) {
+      if (playerTwoObject.isAi) {
+        gameBoardModule.freezeBoard();
+        minimaxModule.setPlayerLetters(playerOneObject.selectedLetter, playerTwoObject.selectedLetter);
+        minimaxModule.minimaxEval(4, true, gameBoardModule.retrieveBoardState());
+        gameBoardModule.setAiMove(minimaxModule.getBestMoveIndex());
+        gameBoardModule.unfreezeBoard();
+        gameplayLoop();
+      }
+    }
   }
 
   function displayRoundResult(roundResult) {

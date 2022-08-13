@@ -29,8 +29,6 @@ const checkGameModule = {
   isGameOver: function(gameArray) {
     let winner = isGameWon(gameArray);
     let tie = isGameTied(gameArray);
-    console.log(winner);
-    console.log(tie);
     if (winner) { return winner; }
     if (tie) { return tie; }
   },
