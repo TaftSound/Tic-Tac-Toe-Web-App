@@ -3,6 +3,9 @@
   --background-color-dark: rgb(175, 175, 175);
   --main-text-color: rgb(80, 80, 80);
   --secondary-text-color: rgb(120, 120, 120);
+  --resizable-font-large: clamp(40px, calc(3vh + 3vw), 100px);
+  --resizable-font-medium: clamp(20px, calc(1.8vh + 1.8vw), 40px);
+  --resizable-font-small: clamp(16px, calc(.5vh + 2vw), 35px);
 }
 
 body {
@@ -15,7 +18,8 @@ body {
 
 /* Header Styling =============================================== */
 .header {
-  height: 75px;
+  height: min-content;
+  padding: 10px 0px;
   background-color: var(--background-color-light);
   display: flex;
   justify-content: center;
@@ -25,7 +29,7 @@ body {
   /* border-bottom: solid 3px var(--main-text-color); */
 }
 h1 {
-  font-size: 50px;
+  font-size: var(--resizable-font-large);
   margin: 0px;
   color: var(--main-text-color);
   background-color: white;
@@ -33,7 +37,7 @@ h1 {
   text-align: center;
 }
 h2 {
-  font-size: 24px;
+  font-size: var(--resizable-font-medium);
   color: var(--main-text-color);
   background-color: white;
   text-align: center;
@@ -73,8 +77,8 @@ h3 {
 .board {
   background-color: var(--background-color-light);
   box-sizing: border-box;
-  height: clamp(350px, 75vh, 600px);
-  width: clamp(350px, 75vh, 600px);
+  height: clamp(375px, 75vh, 1000px);
+  width: clamp(375px, 75vh, 1000px);
   flex-shrink: 0;
   margin: 15px;
   padding: 7.5px;
@@ -110,6 +114,10 @@ h3 {
   bottom: 0;
   left: 0;
   right: 0;
+  font-size: 75px;
+  font-family: montserrat,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+  font-weight: 900;
+  color: var(--main-text-color);
 }
 .board-space button:disabled {
   color: var(--main-text-color);
@@ -132,18 +140,19 @@ h3 {
 .start-button-container button {
   border: solid 2px transparent;
   border-radius: 10px;
-  padding: 15px 25px;
+  padding: calc(1vh + 1vw) 25px;
   background-color: white;
   color: var(--main-text-color);
   font-family: montserrat,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
   font-weight: 900;
-  font-size: 24px;
-  width: 200px;
+  font-size: var(--resizable-font-medium);
+  width: clamp(200px, calc(15vh + 15vw), 400px);
   box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.15);
-  transition: 0.1s;
+  /* transition: 0.1s; */
   border: solid 3px var(--background-color-light);
 }
 .start-button-container button:hover {
+  transition: 0.1s;
   transform: matrix();
   transform: translateY(-3px);
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
@@ -216,8 +225,8 @@ input:focus-visible {
 
 /* Status Board Styling =============================================== */
 .status-board {
-  height: clamp(350px, 75vh, 600px);
-  width: clamp(225px, 30vw, 325px);
+  height: clamp(375px, 75vh, 1000px);
+  width: clamp(225px, 30vw, 375px);
   background-color: var(--background-color-light);
   box-sizing: border-box;
   margin: 15px;
@@ -230,7 +239,8 @@ input:focus-visible {
   gap: 15px;
   color: var(--main-text-color);
   font-weight: 900;
-  font-size: 24px;
+  /* font-size: 24px; */
+  font-size: var(--resizable-font-medium);
 }
 .status-board.minimize {
   height: 60vh;
@@ -243,12 +253,14 @@ input:focus-visible {
   display: grid;
   grid-template-columns: 1fr 1fr;
   font-size: 18px;
+  padding-bottom: 10px;
 }
 .status-board legend {
   text-align: center;
 }
 .status-board fieldset h2 {
   padding-top: 0px;
+  font-size: var(--resizable-font-small);
 }
 .player-turn {
   flex: 1;
@@ -260,6 +272,7 @@ input:focus-visible {
 .status-board p {
   margin: 5px;
   align-self: center;
+  font-size: var(--resizable-font-small);
 }
 .spacer {
   grid-column: 1 / 3;
@@ -267,8 +280,12 @@ input:focus-visible {
   border-radius: 5px;
   background-color: var(--background-color-dark);
 }
-.player-score {
+p.player-score {
   place-self: center;
-  font-size: 65px;
-  height: 79.5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* font-size: 65px; */
+  /* height: 79.5px; */
+  font-size: clamp(45px, calc(9vh), 100px);
 }

@@ -5,6 +5,7 @@ import statusBoardModule from "./modules/status-board.mjs";
 import checkGameModule from "./modules/check-game-over.mjs";
 import displayMessageModule from "./modules/disply-message.mjs";
 import minimaxModule from "./modules/minimax-ai.mjs";
+import fontSizerModule from "./modules/size-font-to-container.mjs";
 
 const gameplayModule = (function() {
   let isTwoPlayer = null;

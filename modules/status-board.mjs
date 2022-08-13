@@ -1,3 +1,5 @@
+import fontSizerModule from "./size-font-to-container.mjs";
+
 let statusBoard = null;
 let roundNumber = null;
 let scoreFieldset = null;
