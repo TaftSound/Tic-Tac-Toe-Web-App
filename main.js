@@ -80,7 +80,7 @@ const gameplayModule = (function() {
     let roundResult = checkGameModule.isGameOver(gameBoardModule.retrieveBoardState());
     if (roundResult) {
       displayRoundResult(roundResult);
-      setTimeout(startNextRound, 4500);
+      setTimeout(startNextRound, 2800);
       return;
     }
     if (playerOneTurn === true) { currentPlayer = playerOneObject; }
@@ -90,12 +90,20 @@ const gameplayModule = (function() {
     playerOneTurn = !playerOneTurn;
     if (currentPlayer === playerTwoObject) {
       if (playerTwoObject.isAi) {
+        let loadingIcons = document.getElementsByClassName('loading');
+        loadingIcons[0].classList.add('img-animate');
+        loadingIcons[1].classList.add('img-animate');
         gameBoardModule.freezeBoard();
         minimaxModule.setPlayerLetters(playerOneObject.selectedLetter, playerTwoObject.selectedLetter);
         minimaxModule.minimaxEval(4, true, gameBoardModule.retrieveBoardState());
-        gameBoardModule.setAiMove(minimaxModule.getBestMoveIndex());
-        gameBoardModule.unfreezeBoard();
-        gameplayLoop();
+        setTimeout(() => {
+          loadingIcons[0].classList.remove('img-animate');
+          loadingIcons[1].classList.remove('img-animate');
+          loadingIcons = null;
+          gameBoardModule.setAiMove(minimaxModule.getBestMoveIndex());
+          gameBoardModule.unfreezeBoard();
+          gameplayLoop();
+        }, 2500);
       }
     }
   }

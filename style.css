@@ -28,6 +28,29 @@ body {
   z-index: 2;
   /* border-bottom: solid 3px var(--main-text-color); */
 }
+h1 img {
+  opacity: 0%;
+  height: var(--resizable-font-medium);
+  margin: 0vw 5vw;
+  transition: .2s;
+}
+.img-animate {
+  transition: .2s;
+  opacity: 100%;
+  animation-duration: 1.2s;
+  animation-name: rotate-loading;
+  animation-iteration-count: infinite;
+  an
+  /* animation-timing-function: linear; */
+}
+@keyframes rotate-loading {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 h1 {
   font-size: var(--resizable-font-large);
   margin: 0px;
