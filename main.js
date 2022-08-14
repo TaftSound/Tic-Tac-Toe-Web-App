@@ -80,7 +80,7 @@ const gameplayModule = (function() {
     let roundResult = checkGameModule.isGameOver(gameBoardModule.retrieveBoardState());
     if (roundResult) {
       displayRoundResult(roundResult);
-      setTimeout(startNextRound, 2800);
+      setTimeout(startNextRound, 3000);
       return;
     }
     if (playerOneTurn === true) { currentPlayer = playerOneObject; }
@@ -103,7 +103,7 @@ const gameplayModule = (function() {
           gameBoardModule.setAiMove(minimaxModule.getBestMoveIndex());
           gameBoardModule.unfreezeBoard();
           gameplayLoop();
-        }, 2500);
+        }, 2200);
       }
     }
   }

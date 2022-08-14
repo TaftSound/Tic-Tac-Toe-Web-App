@@ -40,7 +40,6 @@ h1 img {
   animation-duration: 1.2s;
   animation-name: rotate-loading;
   animation-iteration-count: infinite;
-  an
   /* animation-timing-function: linear; */
 }
 @keyframes rotate-loading {
