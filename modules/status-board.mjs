@@ -1,42 +1,46 @@
-import fontSizerModule from "./size-font-to-container.mjs";
 
-let statusBoard = null;
-let roundNumber = null;
-let scoreFieldset = null;
-let scoreLegend = null;
-let scoreGrid = null;
-let playerOneName = null;
-let playerOneScore = null;
-let spacer = null;
-let playerTwoName = null;
-let playerTwoScore = null;
-let currentTurnFieldset = null;
-let currentTurnLegend = null;
-let currentTurnPlayerName = null;
+  let statusBoard = document.createElement('div');
+  let roundNumber = document.createElement('h2');
+  let scoreFieldset = document.createElement('fieldset');
+  let scoreLegend = document.createElement('legend');
+  let scoreGrid = document.createElement('div');
+  let playerOneName = document.createElement('p');
+  let playerOneScore = document.createElement('p');
+  let spacer = document.createElement('div');
+  let playerTwoName = document.createElement('p');
+  let playerTwoScore = document.createElement('p');
+  let currentTurnFieldset = document.createElement('fieldset');
+  let currentTurnLegend = document.createElement('legend');
+  let currentTurnPlayerName = document.createElement('h2');
+  let finalMessageContainer = document.createElement('div');
+
+  statusBoard.classList.add('status-board');
+  scoreGrid.classList.add('score-grid');
+  playerOneScore.classList.add('player-score');
+  spacer.classList.add('spacer');
+  playerTwoScore.classList.add('player-score');
+  currentTurnFieldset.classList.add('player-turn');
+  finalMessageContainer.classList.add('final-scoreboard');
 
 const statusBoardModule = {
+  createFinalScoreboard: function() {
+    finalMessageContainer.appendChild(playerOneName);
+    finalMessageContainer.appendChild(playerOneScore);
+    finalMessageContainer.appendChild(spacer);
+    finalMessageContainer.appendChild(playerTwoName);
+    finalMessageContainer.appendChild(playerTwoScore);
+    return finalMessageContainer;
+  },
+
+  destroyFinalScoreboard: function() {
+    playerOneName.remove();
+    playerOneScore.remove();
+    playerTwoName.remove();
+    playerTwoScore.remove();
+    finalMessageContainer.remove();
+  },
+
   createStatusBoard: function(pOneName, pTwoName) {
-    statusBoard = document.createElement('div');
-    roundNumber = document.createElement('h2');
-    scoreFieldset = document.createElement('fieldset');
-    scoreLegend = document.createElement('legend');
-    scoreGrid = document.createElement('div');
-    playerOneName = document.createElement('p');
-    playerOneScore = document.createElement('p');
-    spacer = document.createElement('div');
-    playerTwoName = document.createElement('p');
-    playerTwoScore = document.createElement('p');
-    currentTurnFieldset = document.createElement('fieldset');
-    currentTurnLegend = document.createElement('legend');
-    currentTurnPlayerName = document.createElement('h2');
-
-    statusBoard.classList.add('status-board');
-    scoreGrid.classList.add('score-grid');
-    playerOneScore.classList.add('player-score');
-    spacer.classList.add('spacer');
-    playerTwoScore.classList.add('player-score');
-    currentTurnFieldset.classList.add('player-turn');
-
     roundNumber.innerText = 'Round 1!';
     scoreLegend.innerText = 'Score';
     playerOneName.innerText = pOneName;
@@ -62,7 +66,19 @@ const statusBoardModule = {
     return statusBoard;
   },
   destroyStatusBoard: function() {
-
+  statusBoard.remove();
+  roundNumber.remove();
+  scoreFieldset.remove();
+  scoreLegend.remove();
+  scoreGrid.remove();
+  playerOneName.remove();
+  playerOneScore.remove();
+  spacer.remove();
+  playerTwoName.remove();
+  playerTwoScore.remove();
+  currentTurnFieldset.remove();
+  currentTurnLegend.remove();
+  currentTurnPlayerName.remove();
   },
 
   setCurrentPlayer: function(name) {
@@ -81,6 +97,12 @@ const statusBoardModule = {
   minimize: function() {
     statusBoard.classList.add('minimize');
     currentTurnFieldset.remove();
+  },
+
+  endGame: function() {
+    statusBoard.classList.add('minimize');
+    currentTurnFieldset.remove();
+    roundNumber.remove();
   },
 
   maximize: function() {

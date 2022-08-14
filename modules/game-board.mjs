@@ -30,7 +30,14 @@ function addBoardButtons() {
 function addEventListeners() {
   for (let button in boardButtonArray) {
     button = boardButtonArray[button];
-    button.addEventListener('click', (e) => { buttonPressed(e); });
+    button.addEventListener('click', buttonPressed);
+  }
+}
+
+function removeEventListeners() {
+  for (let button in boardButtonArray) {
+    button = boardButtonArray[button];
+    button.removeEventListener('click', buttonPressed);
   }
 }
 
@@ -104,11 +111,20 @@ let gameBoardModule = {
   },
 
   destroyGameBoard: function() {
+    removeEventListeners();
+    for (let button in boardButtonArray) {
+      boardButtonArray[button].remove();
+    }
     for (let boardSpace in boardSpaceArray) {
+      boardSpaceArray[boardSpace].classList.remove('board-space');
       boardSpaceArray[boardSpace].remove();
     }
     gameBoardDiv.remove();
     gameGridDiv.remove();
+    boardSpaceArray = [];
+    boardButtonArray = [];
+    eventFunctionArray = [];
+    currentLetter = null;
   }
 
 };

@@ -5,7 +5,6 @@ import statusBoardModule from "./modules/status-board.mjs";
 import checkGameModule from "./modules/check-game-over.mjs";
 import displayMessageModule from "./modules/disply-message.mjs";
 import minimaxModule from "./modules/minimax-ai.mjs";
-import fontSizerModule from "./modules/size-font-to-container.mjs";
 
 const gameplayModule = (function() {
   let isTwoPlayer = null;
@@ -16,7 +15,6 @@ const gameplayModule = (function() {
   let playerTwoScore = 0;
   let playerOneObject = null;
   let playerTwoObject = null;
-  const gameStatusObject = { roundNumber, playerOneScore, playerTwoScore, currentPlayer };
   const content = document.querySelector('.content');
   
   function setGameMode(gameMode) {
@@ -103,7 +101,7 @@ const gameplayModule = (function() {
           gameBoardModule.setAiMove(minimaxModule.getBestMoveIndex());
           gameBoardModule.unfreezeBoard();
           gameplayLoop();
-        }, 2200);
+        }, 1800);
       }
     }
   }
@@ -128,14 +126,51 @@ const gameplayModule = (function() {
   }
 
   function startNextRound() {
-    displayMessageModule.removeMessage(); 
-    console.log(roundNumber); // 
+    displayMessageModule.removeMessage();
+    if (roundNumber > 0) {
+      endGame();
+      setTimeout(restartGame, 3000);
+      return;
+    }
     roundNumber = roundNumber + 1;
     statusBoardModule.updateRoundNumber(roundNumber);
     statusBoardModule.maximize();
     gameBoardModule.maximize();
     gameBoardModule.resetBoardState();
     gameplayLoop();
+  }
+
+  function endGame() {
+    let finalMessage = null;
+    if (playerOneScore > playerTwoScore) {
+      finalMessage = `${playerOneObject.playerName} wins the game!`;
+    }
+    else if (playerOneScore < playerTwoScore) {
+      finalMessage = `${playerTwoObject.playerName} wins the game!`;
+    }
+    else { finalMessage = 'The game ends in a tie!'; }
+    displayMessageModule.displayMessage(finalMessage);
+    statusBoardModule.maximize();
+    gameBoardModule.maximize();
+    gameBoardModule.destroyGameBoard();
+    statusBoardModule.destroyStatusBoard();
+    content.appendChild(statusBoardModule.createFinalScoreboard());
+  }
+
+  function restartGame() {
+    displayMessageModule.removeMessage();
+    gameBoardModule.destroyGameBoard();
+    statusBoardModule.destroyStatusBoard();
+    statusBoardModule.destroyFinalScoreboard();
+    isTwoPlayer = null;
+    playerOneTurn = true;
+    roundNumber = 1;
+    currentPlayer = null;
+    playerOneScore = 0;
+    playerTwoScore = 0;
+    playerOneObject = null;
+    playerTwoObject = null;
+    gameplayModule.displayStartButtons();
   }
 
 // Public Below Here ==========================================================
@@ -148,15 +183,3 @@ const gameplayModule = (function() {
 })();
 
 gameplayModule.displayStartButtons();
-
-// function isThisTruthy(value) {
-//   if (value) {
-//     console.log('truthy');
-//   }
-//   else {
-//     console.log('falsy');
-//   }
-// }
-
-// gameBoardModule.createGameBoard();
-// gameBoardModule.disassembleGameBoard();

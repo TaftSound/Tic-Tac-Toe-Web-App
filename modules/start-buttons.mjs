@@ -26,6 +26,7 @@ const startButtonModule = {
   },
 
   removeStartButtons: function() {
+    startButtonDiv.classList.remove('start-button-container');
     onePlayerButton.removeEventListener('click', listenerFunction);
     twoPlayerButton.removeEventListener('click', listenerFunction);
     onePlayerButton.remove();
