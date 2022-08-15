@@ -313,7 +313,7 @@ input[type="radio"]::before {
   width: inherit;
   height: inherit;
   box-sizing: border-box;
-  border: solid 3px transparent;
+  border: solid clamp(3px, calc(.2vh + .3vw), 7.5px) transparent;
   border-radius: 50%;
   box-shadow: inset var(--resizable-font-extra-small) var(--resizable-font-extra-small) transparent;
 }

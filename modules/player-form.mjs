@@ -21,6 +21,7 @@ const playerFormModule = {
     else {
       selectedLetter = "O";
     }
+    if (!playerNameInput.value) { return null; }
     let playerName = playerNameInput.value;
     return {playerName, selectedLetter};
   },

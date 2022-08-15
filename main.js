@@ -44,8 +44,20 @@ const gameplayModule = (function() {
   }
 
   function signUpPlayers() {
-    if (!playerOneObject) { playerOneObject = playerFormModule.getFormContent(); }
-    else { playerTwoObject = playerFormModule.getFormContent(); }
+    if (!playerOneObject) { 
+      playerOneObject = playerFormModule.getFormContent();
+      if (!playerOneObject) {
+        alert('Please choose a name');
+        return;
+      }
+    }
+    else {
+      playerTwoObject = playerFormModule.getFormContent();
+      if (!playerTwoObject) {
+        alert('Please choose a name');
+        return;
+      }
+    }
 
     playerFormModule.destroyForm();
 
