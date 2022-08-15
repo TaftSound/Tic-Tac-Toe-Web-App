@@ -141,7 +141,7 @@ const gameplayModule = (function() {
 
   function startNextRound() {
     displayMessageModule.removeMessage();
-    if (roundNumber > 0) {
+    if (roundNumber > 4) {
       endGame();
       timeoutIdThree = setTimeout(restartGame, 3000);
       return;
