@@ -10,6 +10,7 @@ const displayMessageModule = {
   },
 
   removeMessage: function() {
+    if (!messageText) { return; }
     messageText.textContent = '';
     messageText.remove();
     messageText = null;

@@ -107,6 +107,7 @@ const statusBoardModule = {
 
   maximize: function() {
     statusBoard.classList.remove('minimize');
+    if (!statusBoard.childElementCount) { return; }
     statusBoard.insertBefore(currentTurnFieldset, roundNumber);
   }
 

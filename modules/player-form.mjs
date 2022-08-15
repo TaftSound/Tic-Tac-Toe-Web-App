@@ -93,6 +93,7 @@ const playerFormModule = {
     return formContainer;
   },
   destroyForm: function() {
+    if (!formContainer) { return; }
     submitButton.removeEventListener('click', listenerFunction)
     
     xLabel.remove();

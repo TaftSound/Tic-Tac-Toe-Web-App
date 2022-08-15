@@ -15,6 +15,9 @@ const gameplayModule = (function() {
   let playerTwoScore = 0;
   let playerOneObject = null;
   let playerTwoObject = null;
+  let timeoutIdOne = null;
+  let timeoutIdTwo = null;
+  let timeoutIdThree = null;
   const content = document.querySelector('.content');
   
   function setGameMode(gameMode) {
@@ -31,6 +34,7 @@ const gameplayModule = (function() {
   function setupGame() {
     let gameMode = this.textContent;
     startButtonModule.removeStartButtons();
+    displayResetButton();
 
     setGameMode(gameMode).then((answer) => {
       isTwoPlayer = answer;
@@ -78,7 +82,7 @@ const gameplayModule = (function() {
     let roundResult = checkGameModule.isGameOver(gameBoardModule.retrieveBoardState());
     if (roundResult) {
       displayRoundResult(roundResult);
-      setTimeout(startNextRound, 3000);
+      timeoutIdOne = setTimeout(startNextRound, 3000);
       return;
     }
     if (playerOneTurn === true) { currentPlayer = playerOneObject; }
@@ -88,24 +92,34 @@ const gameplayModule = (function() {
     playerOneTurn = !playerOneTurn;
     if (currentPlayer === playerTwoObject) {
       if (playerTwoObject.isAi) {
-        let loadingIcons = document.getElementsByClassName('loading');
-        loadingIcons[0].classList.add('img-animate');
-        loadingIcons[1].classList.add('img-animate');
+        displayLoadingIcons();
         gameBoardModule.freezeBoard();
         minimaxModule.setPlayerLetters(playerOneObject.selectedLetter, playerTwoObject.selectedLetter);
         minimaxModule.minimaxEval(4, true, gameBoardModule.retrieveBoardState());
         setTimeout(() => {
-          loadingIcons[0].classList.remove('img-animate');
-          loadingIcons[1].classList.remove('img-animate');
-          loadingIcons = null;
-          gameBoardModule.setAiMove(minimaxModule.getBestMoveIndex());
+          clearLoadingIcons();
           gameBoardModule.unfreezeBoard();
-          gameplayLoop();
         }, 1800);
+        timeoutIdTwo = setTimeout(() => {
+          gameBoardModule.setAiMove(minimaxModule.getBestMoveIndex());
+          gameplayLoop();
+        }, 1801);
       }
     }
   }
 
+  function displayLoadingIcons() {
+    let loadingIcons = document.getElementsByClassName('loading');
+    loadingIcons[0].classList.add('img-animate');
+    loadingIcons[1].classList.add('img-animate');
+  }
+
+  function clearLoadingIcons() {
+    let loadingIcons = document.getElementsByClassName('loading');
+    loadingIcons[0].classList.remove('img-animate');
+    loadingIcons[1].classList.remove('img-animate');
+  }
+  
   function displayRoundResult(roundResult) {
     if (playerOneObject.selectedLetter === roundResult) { 
       playerOneScore++;
@@ -129,7 +143,7 @@ const gameplayModule = (function() {
     displayMessageModule.removeMessage();
     if (roundNumber > 0) {
       endGame();
-      setTimeout(restartGame, 3000);
+      timeoutIdThree = setTimeout(restartGame, 3000);
       return;
     }
     roundNumber = roundNumber + 1;
@@ -158,10 +172,18 @@ const gameplayModule = (function() {
   }
 
   function restartGame() {
-    displayMessageModule.removeMessage();
+    gameBoardModule.maximize();
     gameBoardModule.destroyGameBoard();
+    statusBoardModule.maximize();
     statusBoardModule.destroyStatusBoard();
     statusBoardModule.destroyFinalScoreboard();
+    playerFormModule.destroyForm();
+    displayMessageModule.removeMessage();
+    gameplayModule.displayStartButtons();
+    clearData();
+  }
+
+  function clearData() {
     isTwoPlayer = null;
     playerOneTurn = true;
     roundNumber = 1;
@@ -170,7 +192,30 @@ const gameplayModule = (function() {
     playerTwoScore = 0;
     playerOneObject = null;
     playerTwoObject = null;
-    gameplayModule.displayStartButtons();
+  }
+
+  function displayResetButton() {
+    let resetButton = document.querySelector('.reset-button');
+    resetButton.addEventListener('click', functionsForReset);
+    resetButton.classList.add('appear');
+  }
+
+  function removeResetButton() {
+    let resetButton = document.querySelector('.reset-button');
+    resetButton.removeEventListener('click', functionsForReset);
+    resetButton.classList.remove('appear');
+  }
+
+  function functionsForReset() {
+    clearTimeoutFunc();
+    clearLoadingIcons();
+    restartGame();
+  }
+
+  function clearTimeoutFunc() {
+    clearTimeout(timeoutIdOne);
+    clearTimeout(timeoutIdTwo);
+    clearTimeout(timeoutIdThree);
   }
 
 // Public Below Here ==========================================================
@@ -178,6 +223,7 @@ const gameplayModule = (function() {
     displayStartButtons: function() {
       content.appendChild(startButtonModule.createStartButtons());
       startButtonModule.assignStartButtonListeners(setupGame);
+      removeResetButton();
     }
   };
 })();
