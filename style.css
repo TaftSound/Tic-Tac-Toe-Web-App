@@ -267,10 +267,23 @@ input {
   padding: calc(10px + .5vh + .5vw) 20px;
   color: var(--main-text-color);
   font-size: var(--resizable-font-small);
+  font-family: montserrat,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
 }
 input:focus-visible {
   outline: none;
   border-color: var(--main-text-color);
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--main-text-color);
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  box-shadow: 0 0 0px 1000px white inset;
+  font-family: montserrat,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+  font-size: var(--resizable-font-small);
 }
 fieldset {
   margin: 0px;
@@ -313,7 +326,7 @@ input[type="radio"]::before {
   width: inherit;
   height: inherit;
   box-sizing: border-box;
-  border: solid clamp(3px, calc(.2vh + .3vw), 7.5px) transparent;
+  border: solid clamp(3px, calc(.25vh + .25vw), 5px) transparent;
   border-radius: 50%;
   box-shadow: inset var(--resizable-font-extra-small) var(--resizable-font-extra-small) transparent;
 }
