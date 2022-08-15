@@ -286,41 +286,41 @@ fieldset {
 fieldset label {
   margin-left: 10px;
 }
-fieldset input {
-  /* margin-bottom: 7.5px; */
+input[type="radio"] {
   margin-right: 20px;
   margin-top: 0px;
   -webkit-appearance: none;
   appearance: none;
   font-size: inherit;
+  background-color: transparent;
   height: var(--resizable-font-extra-small);
   width: var(--resizable-font-extra-small);
   padding: 3px;
   display: grid;
   place-content: center;
   place-items: center;
+  border-color: var(--background-color-dark);
   border-radius: 50%;
-}
-input[type="radio"]::before {
-  content: "";
-  width: calc(var(--resizable-font-extra-small) - 5px);
-  height: calc(var(--resizable-font-extra-small) - 5px);
-  border-radius: 50%;
-  transform: scale(0);
-  /* transition: 40ms transform ease-in-out; */
-  box-shadow: inset var(--resizable-font-extra-small) var(--resizable-font-extra-small) var(--main-text-color);
-}
-input[type="radio"]:checked::before {
-  transform: scale(.9);
 }
 input[type="radio"]:checked {
-  border-radius: 50%;
   border-color: var(--secondary-text-color);
 }
 input[type="radio"]:checked:disabled {
   border-color: var(--background-color-dark);
 }
-input[type="radio"]:disabled:before {
+input[type="radio"]::before {
+  content: "";
+  width: inherit;
+  height: inherit;
+  box-sizing: border-box;
+  border: solid 3px transparent;
+  border-radius: 50%;
+  box-shadow: inset var(--resizable-font-extra-small) var(--resizable-font-extra-small) transparent;
+}
+input[type="radio"]:checked::before {
+  box-shadow: inset var(--resizable-font-extra-small) var(--resizable-font-extra-small) var(--main-text-color);
+}
+input[type="radio"]:checked:disabled::before {
   box-shadow: inset var(--resizable-font-extra-small) var(--resizable-font-extra-small) var(--background-color-dark);
 }
 fieldset.deactivate {
