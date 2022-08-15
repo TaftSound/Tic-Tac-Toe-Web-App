@@ -22,12 +22,8 @@ const gameplayModule = (function() {
   
   function setGameMode(gameMode) {
     return new Promise((resolve, reject) => {
-      if (gameMode === 'One Player') {
-        resolve(false);
-      }
-      else if (gameMode === 'Two Player') {
-        resolve(true);
-      }
+      if (gameMode === 'One Player') { resolve(false); }
+      else if (gameMode === 'Two Player') { resolve(true); }
     });
   }
 
@@ -38,9 +34,13 @@ const gameplayModule = (function() {
 
     setGameMode(gameMode).then((answer) => {
       isTwoPlayer = answer;
-      content.appendChild(playerFormModule.createForm('Player One'));
-      playerFormModule.addSubmitButtonListener(signUpPlayers);
+      newSignUp('Player One');
     });
+  }
+
+  function newSignUp(playerNumber) {
+    content.appendChild(playerFormModule.createForm(playerNumber));
+      playerFormModule.addSubmitButtonListener(signUpPlayers);
   }
 
   function signUpPlayers() {
@@ -51,15 +51,12 @@ const gameplayModule = (function() {
 
     if (isTwoPlayer) {
       isTwoPlayer = null;
-      content.appendChild(playerFormModule.createForm('Player Two', playerOneObject));
-      playerFormModule.addSubmitButtonListener(signUpPlayers);
-      return;
+      newSignUp('Player Two');
+      return; /* exit function to sign up second player */
     }
     if (!playerTwoObject) {
       let letter = null;
-      if (playerOneObject.selectedLetter === "X") {
-        letter = 'O';
-      }
+      if (playerOneObject.selectedLetter === "X") { letter = 'O'; }
       else letter = 'X';
       playerTwoObject = {
         playerName: 'Computer',
@@ -85,27 +82,34 @@ const gameplayModule = (function() {
       timeoutIdOne = setTimeout(startNextRound, 3000);
       return;
     }
+    
     if (playerOneTurn === true) { currentPlayer = playerOneObject; }
     else { currentPlayer = playerTwoObject; }
+
     statusBoardModule.setCurrentPlayer(currentPlayer.playerName);
     gameBoardModule.setCurrentLetter(currentPlayer.selectedLetter);
     playerOneTurn = !playerOneTurn;
+
     if (currentPlayer === playerTwoObject) {
       if (playerTwoObject.isAi) {
-        displayLoadingIcons();
-        gameBoardModule.freezeBoard();
-        minimaxModule.setPlayerLetters(playerOneObject.selectedLetter, playerTwoObject.selectedLetter);
-        minimaxModule.minimaxEval(4, true, gameBoardModule.retrieveBoardState());
-        setTimeout(() => {
-          clearLoadingIcons();
-          gameBoardModule.unfreezeBoard();
-        }, 1800);
-        timeoutIdTwo = setTimeout(() => {
-          gameBoardModule.setAiMove(minimaxModule.getBestMoveIndex());
-          gameplayLoop();
-        }, 1801);
+        runAiOpponent();
       }
     }
+  }
+
+  function runAiOpponent() {
+    displayLoadingIcons();
+    gameBoardModule.freezeBoard();
+    minimaxModule.setPlayerLetters(playerOneObject.selectedLetter, playerTwoObject.selectedLetter);
+    minimaxModule.minimaxEval(4, true, gameBoardModule.retrieveBoardState());
+    setTimeout(() => {
+      clearLoadingIcons();
+      gameBoardModule.unfreezeBoard();
+    }, 1800);
+    timeoutIdTwo = setTimeout(() => {
+      gameBoardModule.setAiMove(minimaxModule.getBestMoveIndex());
+      gameplayLoop();
+    }, 1801);
   }
 
   function displayLoadingIcons() {
