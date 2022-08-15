@@ -261,6 +261,17 @@ h3 {
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
   background-color: var(--background-color-light);
 }
+input {
+  border: solid var(--background-color-dark);
+  border-radius: 10px;
+  padding: calc(10px + .5vh + .5vw) 20px;
+  color: var(--main-text-color);
+  font-size: var(--resizable-font-small);
+}
+input:focus-visible {
+  outline: none;
+  border-color: var(--main-text-color);
+}
 fieldset {
   margin: 0px;
   border: solid var(--background-color-dark);
@@ -288,6 +299,7 @@ fieldset input {
   display: grid;
   place-content: center;
   place-items: center;
+  border-radius: 50%;
 }
 input[type="radio"]::before {
   content: "";
@@ -295,13 +307,14 @@ input[type="radio"]::before {
   height: calc(var(--resizable-font-extra-small) - 5px);
   border-radius: 50%;
   transform: scale(0);
-  transition: 40ms transform ease-in-out;
+  /* transition: 40ms transform ease-in-out; */
   box-shadow: inset var(--resizable-font-extra-small) var(--resizable-font-extra-small) var(--main-text-color);
 }
 input[type="radio"]:checked::before {
   transform: scale(.9);
 }
 input[type="radio"]:checked {
+  border-radius: 50%;
   border-color: var(--secondary-text-color);
 }
 input[type="radio"]:checked:disabled {
@@ -312,17 +325,6 @@ input[type="radio"]:disabled:before {
 }
 fieldset.deactivate {
   color: var(--background-color-dark);
-}
-input {
-  border: solid var(--background-color-dark);
-  border-radius: 10px;
-  padding: calc(10px + .5vh + .5vw) 20px;
-  color: var(--main-text-color);
-  font-size: var(--resizable-font-small);
-}
-input:focus-visible {
-  outline: none;
-  border-color: var(--main-text-color);
 }
 
 /* Status Board Styling =============================================== */
