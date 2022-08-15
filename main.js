@@ -38,8 +38,8 @@ const gameplayModule = (function() {
     });
   }
 
-  function newSignUp(playerNumber) {
-    content.appendChild(playerFormModule.createForm(playerNumber));
+  function newSignUp(playerNumber, playerOneObject) {
+    content.appendChild(playerFormModule.createForm(playerNumber, playerOneObject));
       playerFormModule.addSubmitButtonListener(signUpPlayers);
   }
 
@@ -51,7 +51,7 @@ const gameplayModule = (function() {
 
     if (isTwoPlayer) {
       isTwoPlayer = null;
-      newSignUp('Player Two');
+      newSignUp('Player Two', playerOneObject);
       return; /* exit function to sign up second player */
     }
     if (!playerTwoObject) {

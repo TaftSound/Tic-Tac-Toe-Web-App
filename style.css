@@ -201,8 +201,8 @@ h3 {
   color: var(--main-text-color);
   font-family: montserrat,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
   font-weight: 900;
-  font-size: var(--resizable-font-medium);
-  width: clamp(200px, calc(15vh + 15vw), 400px);
+  font-size: calc(var(--resizable-font-medium) - 5px);
+  width: clamp(150px, calc(15vh + 15vw), 400px);
   box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.15);
   /* transition: 0.1s; */
   border: solid 5px var(--background-color-light);
@@ -267,13 +267,48 @@ fieldset {
   border-radius: 10px;
   background-color: white;
   text-align: center;
+  font-size: var(--resizable-font-small);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 fieldset label {
-  margin-left: 15px;
+  margin-left: 10px;
 }
 fieldset input {
-  margin-bottom: 7.5px;
-  margin-right: 15px;
+  /* margin-bottom: 7.5px; */
+  margin-right: 20px;
+  margin-top: 0px;
+  -webkit-appearance: none;
+  appearance: none;
+  font-size: inherit;
+  height: var(--resizable-font-extra-small);
+  width: var(--resizable-font-extra-small);
+  padding: 3px;
+  display: grid;
+  place-content: center;
+  place-items: center;
+}
+input[type="radio"]::before {
+  content: "";
+  width: calc(var(--resizable-font-extra-small) - 5px);
+  height: calc(var(--resizable-font-extra-small) - 5px);
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 40ms transform ease-in-out;
+  box-shadow: inset var(--resizable-font-extra-small) var(--resizable-font-extra-small) var(--main-text-color);
+}
+input[type="radio"]:checked::before {
+  transform: scale(.9);
+}
+input[type="radio"]:checked {
+  border-color: var(--secondary-text-color);
+}
+input[type="radio"]:checked:disabled {
+  border-color: var(--background-color-dark);
+}
+input[type="radio"]:disabled:before {
+  box-shadow: inset var(--resizable-font-extra-small) var(--resizable-font-extra-small) var(--background-color-dark);
 }
 fieldset.deactivate {
   color: var(--background-color-dark);
